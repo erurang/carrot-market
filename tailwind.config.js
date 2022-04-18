@@ -10,5 +10,7 @@ module.exports = {
   theme: {
     extend: {},
   },
+  // media => Os의 기본환경설정 class => 웹사이트에서 선택하는 방식
+  darkMode: "class",
   plugins: [],
 }
