@@ -4,7 +4,7 @@
 npx create-next-app@latest --typescript
 npm i -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p
-
+@tailwindcss/forms 
 vscode===
 tailwind css intellisense
 ```
