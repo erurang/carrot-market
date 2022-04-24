@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import Button from "../components/button";
 import Input from "../components/input";
-import { cls } from "../libs/utils";
+import { cls } from "../libs/client/utils";
 import {useForm} from "react-hook-form"
 
 interface EnterForm {
@@ -16,6 +16,8 @@ const Enter: NextPage = () => {
 
   const {register,watch, handleSubmit, reset} = useForm<EnterForm>()
 
+  const [submitting, setSubmmiting] = useState(false)
+
   const [method, setMethod] = useState<"email" | "phone">("email");
   const onEmailClick = () => {
     reset()
@@ -27,7 +29,16 @@ const Enter: NextPage = () => {
   };
 
   const onValid = (data: EnterForm) => {
-    console.log(data)
+
+    setSubmmiting(true)
+
+    fetch("/api/users/enter", {
+      method :"POST",
+      body : JSON.stringify(data),
+      headers : {
+        "Content-Type" : "application/json"
+      }
+    }).then(() => setSubmmiting(false))
   }
   const onInValid = (data: EnterForm) => {}
 
@@ -78,7 +89,7 @@ const Enter: NextPage = () => {
           ) : null}
           {method === "email" ? <Button text={"Get login link"} /> : null}
           {method === "phone" ? (
-            <Button text={"Get one-time password"} />
+            <Button text={submitting ? "Loading" : "Get one-time password"} />
           ) : null}
         </form>
 
